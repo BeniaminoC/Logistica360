@@ -1,0 +1,28 @@
+name: Preparar base de datos
+
+on:
+  workflow_dispatch:
+    inputs:
+      cargar_datos_demo:
+        description: "Cargar datos de demostración (si la base ya tiene pedidos, no hace nada)"
+        type: boolean
+        default: true
+
+jobs:
+  preparar:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_CA_CERT: ${{ secrets.DATABASE_CA_CERT }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Crear tablas
+        run: npm run db:migrate
+      - name: Cargar datos de demostración
+        if: ${{ inputs.cargar_datos_demo }}
+        run: npm run db:seed

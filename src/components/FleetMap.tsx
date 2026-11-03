@@ -39,8 +39,9 @@ export default function FleetMap({ vehiculos, filtro = null, puntos = [], linea,
   return (
     <MapContainer center={[8.6, -75.4]} zoom={7} scrollWheelZoom style={{ height: "100%", width: "100%" }}>
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+   url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+   maxZoom={19}
       />
       <AjustarUnaVez coords={coordsAjuste} />
       {linea && <Polyline positions={linea} pathOptions={{ color: "#1d2327", weight: 3, dashArray: "8 8", opacity: 0.7 }} />}

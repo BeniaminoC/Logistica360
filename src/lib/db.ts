@@ -22,10 +22,10 @@ function crearPool(): Pool {
     connectionString: url.toString(),
     // Aiven exige TLS. Con el certificado CA se verifica el servidor; sin él, solo se cifra.
     ssl: ca ? { ca, rejectUnauthorized: true } : { rejectUnauthorized: false },
-    // Pocas conexiones por instancia: el plan gratuito de Aiven tiene un límite bajo.
-    max: 3,
-    idleTimeoutMillis: 10_000,
-    connectionTimeoutMillis: 10_000,
+           // Una sola conexión por instancia y se suelta enseguida.
+       max: 1,
+       idleTimeoutMillis: 1_000,
+       allowExitOnIdle: true,
   });
 }
 
